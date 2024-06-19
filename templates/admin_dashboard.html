@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0e0f8;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #6a0dad;
+        }
+        .table thead th {
+            background-color: #6a0dad;
+            color: white;
+        }
+        .table tbody tr.late {
+            background-color: #f8d7da;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Admin Dashboard</h1>
+        <h2 class="text-center">Students</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Student ID</th>
+                    <th>QR Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td>{{ student.id }}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.student_id }}</td>
+                        <td><img src="{{ url_for('static', filename=student.qr_code) }}" alt="QR Code" width="50"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2 class="text-center">Attendance Records</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student Name</th>
+                    <th>Timestamp</th>
+                    <th>Actual Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in attendance_records %}
+                    <tr class="{% if record.actual_time > datetime.strptime('09:00:00', '%H:%M:%S').time() %}late{% endif %}">
+                        <td>{{ record.id }}</td>
+                        <td>{{ record.student.name }}</td>
+                        <td>{{ record.timestamp }}</td>
+                        <td>{{ record.actual_time }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center mt-3">
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</body>
+</html>
