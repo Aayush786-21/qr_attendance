@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QR Code Preview</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #e0e0f8;
+            font-family: Arial, sans-serif;
+        }
+        .qr-container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #6a0dad;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #5a0080;
+        }
+        h1, h2 {
+            color: #6a0dad;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="qr-container animate__animated animate__fadeIn">
+        <h1 class="text-center">Your QR Code</h1>
+        <h2 class="text-center">{{ name }}</h2>
+        <img src="{{ url_for('static', filename='uploads/' + qr_code + '.png') }}" alt="Generated QR Code" onerror="this.onerror=null;this.src='/static/images/qr_error.png';">
+        <div class="message">Please take a photo of your QR code with your mobile phone.</div>
+        <a href="{{ url_for('index') }}" class="button" role="button">Go Back</a>
+    </div>
+</body>
+</html>
