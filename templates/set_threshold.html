@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Set Threshold Time</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Set Threshold Time</h1>
+        <form action="/set_threshold" method="post" class="mt-4">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label for="threshold_time">Threshold Time</label>
+                {{ form.threshold_time(class_='form-control') }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Set Time</button>
+        </form>
+    </div>
+</body>
+</html>

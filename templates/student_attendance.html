@@ -4,108 +4,18 @@
     <meta charset="UTF-8">
     <title>Student Attendance</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #e0e0f8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            width: 400px;
-            animation: fadeIn 1s;
-        }
-        h1, h2 {
-            color: #6a0dad;
-        }
-        button {
-            background-color: #6a0dad;
-            border: none;
-        }
-        button:hover {
-            background-color: #5a0080;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-    </style>
-    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
 </head>
 <body>
-    <div class="container animate__animated animate__fadeIn">
+    <div class="container mt-5">
         <h1 class="text-center">Student Attendance</h1>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-message">
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }} animate__animated animate__fadeIn">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-        <h2 class="text-center">Generate QR Code</h2>
-        <form action="/generate_qr" method="post">
-            {{ generate_form.hidden_tag() }}
+        <form action="/scan" method="post" enctype="multipart/form-data" class="mt-4">
+            {{ form.hidden_tag() }}
             <div class="form-group">
-                <label for="name">Name:</label>
-                {{ generate_form.name(class_="form-control") }}
+                <label for="file">Upload QR Code</label>
+                {{ form.file(class_='form-control') }}
             </div>
-            <div class="form-group">
-                <label for="student_id">Student ID:</label>
-                {{ generate_form.student_id(class_="form-control") }}
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Generate</button>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
         </form>
-        <h2 class="text-center mt-4">Scan QR Code</h2>
-        <form action="/scan" method="post" enctype="multipart/form-data">
-            {{ scan_form.hidden_tag() }}
-            <div class="form-group">
-                <label for="file">Select QR Code:</label>
-                {{ scan_form.file(class_="form-control-file") }}
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Scan</button>
-        </form>
-        <h2 class="text-center mt-4">Scan with Camera</h2>
-        <div id="reader" class="mt-2"></div>
-        <div class="message text-center mt-2" id="qr-result"></div>
-        <div class="text-center mt-3">
-            <a href="/logout" class="btn btn-danger">Logout</a>
-        </div>
     </div>
-    <script>
-        function onScanSuccess(decodedText, decodedResult) {
-            document.getElementById('qr-result').innerHTML = `<span class="result">Scanned result: ${decodedText}</span>`;
-            console.log(`Scan result: ${decodedText}`, decodedResult);
-        }
-
-        function onScanError(errorMessage) {
-            console.error(`Scan error: ${errorMessage}`);
-        }
-
-        const html5QrCode = new Html5Qrcode("reader");
-        html5QrCode.start(
-            { facingMode: "environment" }, // Use back camera
-            {
-                fps: 10, // Scans per second
-                qrbox: { width: 250, height: 250 } // Set the QR scanning box dimensions
-            },
-            onScanSuccess,
-            onScanError
-        ).catch(err => {
-            console.error(`Unable to start scanning, error: ${err}`);
-        });
-    </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
