@@ -4,5 +4,5 @@ objectives - to make a system and deploy it into clouds, make use docker ansible
 so in the "added new code commit" i have done the general qr generation. and stored it in attendance.db
 in the "phase 2" i am trying to build a login page of different personnel "students", "teachers" and "admin"
 phase 3 i am trying to build login page for only admin.. 
-phase 4 just more trying and getting frustrated right now
+phase 4 just more trying and getting frustrated right now but i made docker file and tried to deploy this system through docker.. which went well.
 
